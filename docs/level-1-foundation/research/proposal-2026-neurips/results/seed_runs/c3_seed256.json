@@ -1,0 +1,260 @@
+{
+  "card": "C3",
+  "dataset": "Open Bandit Dataset bundled sample",
+  "seed": 256,
+  "obp_version": "0.4.1",
+  "compatibility_patches": [
+    "DataFrame.drop(axis positional -> keyword)",
+    "pandas.concat(axis positional -> keyword)"
+  ],
+  "policy_pairs": [
+    {
+      "logging_policy": "random",
+      "campaign": "all",
+      "rows": 10000,
+      "n_actions": 80,
+      "len_list": 3,
+      "reward_mean_logged": 0.0038,
+      "target_policy": {
+        "type": "synthetic_epsilon_greedy",
+        "epsilon": 0.1,
+        "greedy_rule": "top-10 OBD actions by logged popularity for this behavior-policy slice",
+        "top_k": 10,
+        "greedy_actions": [
+          1,
+          54,
+          46,
+          57,
+          7,
+          33,
+          10,
+          8,
+          79,
+          15
+        ]
+      },
+      "estimators": {
+        "ips": {
+          "value": 0.004699999999999999,
+          "mean": 0.00467835,
+          "ci95_low": 0.0018089999999999998,
+          "ci95_high": 0.008973,
+          "obp_estimator_name": "ipw"
+        },
+        "snips": {
+          "value": 0.004072507971717733,
+          "mean": 0.004053748440316096,
+          "ci95_low": 0.0015674823235824209,
+          "ci95_high": 0.00777502426174962,
+          "obp_estimator_name": "snipw"
+        },
+        "dr": {
+          "value": 0.0040101442228952355,
+          "mean": 0.003988314289413941,
+          "ci95_low": 0.001070911270010325,
+          "ci95_high": 0.008080350763991422,
+          "obp_estimator_name": "dr"
+        },
+        "switch_dr": {
+          "value": 0.0039805381230588,
+          "mean": 0.003981524371553213,
+          "ci95_low": 0.003869474981665451,
+          "ci95_high": 0.004084708097363834,
+          "obp_estimator_name": "switch-dr"
+        },
+        "dr_os": {
+          "value": 0.003985216591103932,
+          "mean": 0.003982596832692562,
+          "ci95_low": 0.0035267214825213163,
+          "ci95_high": 0.0046902945501647465,
+          "obp_estimator_name": "dr-os"
+        }
+      },
+      "diagnostics": {
+        "ess": 1705.336624759033,
+        "weight_min": 0.09999999999999999,
+        "weight_max": 7.3,
+        "weight_mean": 1.15408,
+        "clipping_curve": [
+          {
+            "clip": 1,
+            "snips": 0.003969623748705556,
+            "ips": 0.0009199999999999999,
+            "ess": 3466.7667682139736
+          },
+          {
+            "clip": 2,
+            "snips": 0.0040194626613073835,
+            "ips": 0.0015199999999999999,
+            "ess": 2406.9402561029797
+          },
+          {
+            "clip": 5,
+            "snips": 0.004061857688166782,
+            "ips": 0.0033200000000000005,
+            "ess": 1821.1007595400447
+          },
+          {
+            "clip": 10,
+            "snips": 0.004072507971717732,
+            "ips": 0.004699999999999999,
+            "ess": 1705.336624759033
+          },
+          {
+            "clip": 20,
+            "snips": 0.004072507971717732,
+            "ips": 0.004699999999999999,
+            "ess": 1705.336624759033
+          },
+          {
+            "clip": 50,
+            "snips": 0.004072507971717732,
+            "ips": 0.004699999999999999,
+            "ess": 1705.336624759033
+          }
+        ]
+      }
+    },
+    {
+      "logging_policy": "bts",
+      "campaign": "all",
+      "rows": 10000,
+      "n_actions": 80,
+      "len_list": 3,
+      "reward_mean_logged": 0.0042,
+      "target_policy": {
+        "type": "synthetic_epsilon_greedy",
+        "epsilon": 0.1,
+        "greedy_rule": "top-10 OBD actions by logged popularity for this behavior-policy slice",
+        "top_k": 10,
+        "greedy_actions": [
+          51,
+          39,
+          7,
+          61,
+          59,
+          63,
+          49,
+          35,
+          79,
+          58
+        ]
+      },
+      "estimators": {
+        "ips": {
+          "value": 0.00365347669918163,
+          "mean": 0.0035960548941228855,
+          "ci95_low": 0.0019462855864972278,
+          "ci95_high": 0.005594025414189971,
+          "obp_estimator_name": "ipw"
+        },
+        "snips": {
+          "value": 0.0036121866660960237,
+          "mean": 0.0035554138177505486,
+          "ci95_low": 0.0019242894981470512,
+          "ci95_high": 0.005530804128425272,
+          "obp_estimator_name": "snipw"
+        },
+        "dr": {
+          "value": 0.0036304907068682754,
+          "mean": 0.0035590064937825873,
+          "ci95_low": 0.001916453417040673,
+          "ci95_high": 0.005620358723717102,
+          "obp_estimator_name": "dr"
+        },
+        "switch_dr": {
+          "value": 0.004319258407897024,
+          "mean": 0.004279800881300765,
+          "ci95_low": 0.0029879764709582874,
+          "ci95_high": 0.005975993419257122,
+          "obp_estimator_name": "switch-dr"
+        },
+        "dr_os": {
+          "value": 0.004047260120974551,
+          "mean": 0.004038144386994965,
+          "ci95_low": 0.0031978210955409883,
+          "ci95_high": 0.00504528985019924,
+          "obp_estimator_name": "dr-os"
+        }
+      },
+      "diagnostics": {
+        "ess": 1153.2880632774559,
+        "weight_min": 0.0026859193364704875,
+        "weight_max": 109.93975903614458,
+        "weight_mean": 1.0114307584027025,
+        "clipping_curve": [
+          {
+            "clip": 1,
+            "snips": 0.004376412870638786,
+            "ips": 0.002088122462258569,
+            "ess": 6101.972550187024
+          },
+          {
+            "clip": 2,
+            "snips": 0.004437579225898945,
+            "ips": 0.0028335369725870628,
+            "ess": 4873.13856003142
+          },
+          {
+            "clip": 5,
+            "snips": 0.004460493909257664,
+            "ips": 0.003618129089912047,
+            "ess": 3394.806956551366
+          },
+          {
+            "clip": 10,
+            "snips": 0.004059510179927523,
+            "ips": 0.00365347669918163,
+            "ess": 2543.072874671995
+          },
+          {
+            "clip": 20,
+            "snips": 0.0038154142278393494,
+            "ips": 0.00365347669918163,
+            "ess": 1902.9225139281202
+          },
+          {
+            "clip": 50,
+            "snips": 0.0036462297171345743,
+            "ips": 0.00365347669918163,
+            "ess": 1335.199697413226
+          }
+        ]
+      }
+    }
+  ],
+  "main_pair": "random -> synthetic_epsilon_greedy_top10",
+  "summary": {
+    "random_switch_dr": {
+      "value": 0.0039805381230588,
+      "mean": 0.003981524371553213,
+      "ci95_low": 0.003869474981665451,
+      "ci95_high": 0.004084708097363834,
+      "obp_estimator_name": "switch-dr"
+    },
+    "random_dr_os": {
+      "value": 0.003985216591103932,
+      "mean": 0.003982596832692562,
+      "ci95_low": 0.0035267214825213163,
+      "ci95_high": 0.0046902945501647465,
+      "obp_estimator_name": "dr-os"
+    },
+    "random_ess": 1705.336624759033,
+    "bts_switch_dr": {
+      "value": 0.004319258407897024,
+      "mean": 0.004279800881300765,
+      "ci95_low": 0.0029879764709582874,
+      "ci95_high": 0.005975993419257122,
+      "obp_estimator_name": "switch-dr"
+    },
+    "bts_dr_os": {
+      "value": 0.004047260120974551,
+      "mean": 0.004038144386994965,
+      "ci95_low": 0.0031978210955409883,
+      "ci95_high": 0.00504528985019924,
+      "obp_estimator_name": "dr-os"
+    },
+    "bts_ess": 1153.2880632774559
+  },
+  "note": "OBP 0.4.1 exposes DoublyRobustWithShrinkage (dr-os), not a MoreRobustDoublyRobust class; dr-os is reported as the robust-DR row for this sprint artifact."
+}

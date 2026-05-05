@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# Downloaded / processed datasets are intentionally not committed.
+data/kuairand/raw/*
+data/kuairand/processed/*
+data/x5/raw/*
+data/x5/processed/*
+
+!data/kuairand/raw/.gitkeep
+!data/kuairand/processed/.gitkeep
+!data/x5/raw/.gitkeep
+!data/x5/processed/.gitkeep

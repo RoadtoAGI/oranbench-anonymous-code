@@ -1,0 +1,55 @@
+{
+  "card": "C2",
+  "dataset": "X5 RetailHero",
+  "seed": 256,
+  "rows": 200039,
+  "test_rows": 50010,
+  "treatment_rate": 0.4998075375301816,
+  "outcome_rate": 0.6198891216212838,
+  "metrics_note": "AUUC, Qini, and uplift@k are computed with scikit-uplift metrics on held-out treatment/control outcomes; no PEHE is reported.",
+  "outcome_auc_sanity": 0.750204735546629,
+  "baselines": {
+    "s_learner": {
+      "auuc": 0.01605487025221216,
+      "qini": 0.010401973155162633,
+      "uplift_at_10": 0.08242649316751116,
+      "uplift_at_30": 0.05900738371318137,
+      "library": "econml.metalearners.SLearner"
+    },
+    "t_learner": {
+      "auuc": 0.019139199926204227,
+      "qini": 0.01279117831296729,
+      "uplift_at_10": 0.10680867115580639,
+      "uplift_at_30": 0.06492417068450662,
+      "library": "econml.metalearners.TLearner"
+    },
+    "x_learner": {
+      "auuc": 0.022580316237932583,
+      "qini": 0.01518528556216014,
+      "uplift_at_10": 0.11637568363483386,
+      "uplift_at_30": 0.06683087088034134,
+      "library": "econml.metalearners.XLearner"
+    },
+    "r_learner_dml": {
+      "auuc": 0.019931496922626277,
+      "qini": 0.013840725935952113,
+      "uplift_at_10": 0.14157678140398255,
+      "uplift_at_30": 0.0661113858363489,
+      "library": "econml.dr.DRLearner",
+      "note": "DRLearner is used as the sprint DML residualization baseline for the R-learner row."
+    },
+    "causal_forest_dml": {
+      "auuc": 0.023510586399310678,
+      "qini": 0.015982231583168638,
+      "uplift_at_10": 0.13149038461538465,
+      "uplift_at_30": 0.05150041164410479,
+      "library": "econml.dml.CausalForestDML",
+      "train_rows": 60000,
+      "test_rows": 20000
+    },
+    "dragonnet_tarnet": {
+      "status": "deferred",
+      "reason": "CPU sprint gate; neural baseline not required unless compute permits"
+    }
+  }
+}

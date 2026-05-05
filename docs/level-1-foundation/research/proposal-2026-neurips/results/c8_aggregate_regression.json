@@ -1,0 +1,290 @@
+{
+  "card": "C8",
+  "task": "creative-aggregate outcome regression",
+  "metric": "RMSE",
+  "metric_note": "RMSE is reported on the per-creative aggregate target rate. Targets are dataset-specific (long-view rate, conversion rate, click rate); RMSE values across datasets are not directly comparable.",
+  "seeds": [
+    42,
+    137,
+    256
+  ],
+  "baselines_run": [
+    "group_mean",
+    "linear",
+    "lightgbm",
+    "mlp"
+  ],
+  "split": "70/15/15 holdout, split key per dataset (see cards.<dataset>.info.split_key)",
+  "cards": {
+    "KuaiRand": {
+      "info": {
+        "source": "data/kuairand/processed/clicks.parquet",
+        "rows_unit_layer": 1186059,
+        "items_pre_filter": 7583,
+        "items_post_filter": 7334,
+        "min_exposures": 50,
+        "split_key": "item_id",
+        "target": "mean(reward_long_view) per item",
+        "features": [
+          "n_exposures",
+          "n_users"
+        ],
+        "per_seed_diagnostics": [
+          {
+            "seed": 42,
+            "train_n": 5134,
+            "val_n": 1100,
+            "test_n": 1100,
+            "test_target_mean": 0.08317196920855369,
+            "test_target_std": 0.061659251236524895
+          },
+          {
+            "seed": 137,
+            "train_n": 5134,
+            "val_n": 1100,
+            "test_n": 1100,
+            "test_target_mean": 0.08568801274456914,
+            "test_target_std": 0.06248733390756083
+          },
+          {
+            "seed": 256,
+            "train_n": 5134,
+            "val_n": 1100,
+            "test_n": 1100,
+            "test_target_mean": 0.08366600692990775,
+            "test_target_std": 0.06093877053197279
+          }
+        ]
+      },
+      "group_mean": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.06173216199671152,
+          0.06248776845281491,
+          0.060977124535150314
+        ],
+        "mean": 0.06173235166155891,
+        "std": 0.000755321976691944
+      },
+      "linear": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.06120109595211576,
+          0.06229246747881476,
+          0.06104974865511358
+        ],
+        "mean": 0.0615144373620147,
+        "std": 0.0006780299757852925
+      },
+      "lightgbm": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.06143869116898748,
+          0.062254347717167986,
+          0.06160325866374815
+        ],
+        "mean": 0.06176543251663454,
+        "std": 0.000431334174472006
+      },
+      "mlp": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.0610257148347193,
+          0.06201401783192521,
+          0.061048789393804356
+        ],
+        "mean": 0.06136284068681628,
+        "std": 0.0005640539553565718
+      }
+    },
+    "X5": {
+      "info": {
+        "source": "data/x5/processed/uplift.parquet",
+        "rows_unit_layer": 200039,
+        "split_key": "client_id row split; aggregate by treatment plus rank-quantile customer cells within each split",
+        "target": "mean(outcome) per (subsplit, treatment, customer-cell) group",
+        "aggregation": {
+          "treatment_col": "treatment",
+          "bin_source_cols": [
+            "X_age",
+            "X_purchase_count",
+            "X_total_spend",
+            "X_recency_days"
+          ],
+          "binning": "5 rank-quantile bins per source column, computed from non-outcome covariates"
+        },
+        "features": [
+          "treatment",
+          "n_clients",
+          "propensity_estimate_mean",
+          "X_age_bin",
+          "X_purchase_count_bin",
+          "X_total_spend_bin",
+          "X_recency_days_bin",
+          "X_age_mean",
+          "X_purchase_count_mean",
+          "X_total_spend_mean",
+          "X_unique_products_mean",
+          "X_unique_stores_mean",
+          "X_avg_spend_mean",
+          "X_recency_days_mean",
+          "gender_f_share",
+          "gender_m_share",
+          "gender_u_share"
+        ],
+        "per_seed_diagnostics": [
+          {
+            "seed": 42,
+            "client_train_n": 140027,
+            "client_test_n": 30006,
+            "agg_train_rows": 1105,
+            "agg_test_rows": 1002,
+            "test_target_mean": 0.60910688826034,
+            "test_target_std": 0.26695100997843874
+          },
+          {
+            "seed": 137,
+            "client_train_n": 140027,
+            "client_test_n": 30006,
+            "agg_train_rows": 1099,
+            "agg_test_rows": 1006,
+            "test_target_mean": 0.6065380497786622,
+            "test_target_std": 0.27935938554860107
+          },
+          {
+            "seed": 256,
+            "client_train_n": 140027,
+            "client_test_n": 30006,
+            "agg_train_rows": 1109,
+            "agg_test_rows": 1001,
+            "test_target_mean": 0.6115635974431216,
+            "test_target_std": 0.2704166721391474
+          }
+        ]
+      },
+      "group_mean": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.26696085668761643,
+          0.2794704161359868,
+          0.27064966955203046
+        ],
+        "mean": 0.27236031412521117,
+        "std": 0.006427829963517435
+      },
+      "linear": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.18714391614966513,
+          0.19133613530900423,
+          0.18369680827293358
+        ],
+        "mean": 0.18739228657720097,
+        "std": 0.0038257150041483413
+      },
+      "lightgbm": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.19617185703406423,
+          0.19647105039504031,
+          0.2016721201722488
+        ],
+        "mean": 0.19810500920045113,
+        "std": 0.003092828750618541
+      },
+      "mlp": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.20415833491916338,
+          0.21252574923874426,
+          0.18855046673867243
+        ],
+        "mean": 0.20174485029886002,
+        "std": 0.012168493076338306
+      }
+    },
+    "OBD": {
+      "info": {
+        "source": "obp.dataset.OpenBanditDataset(behavior_policy in {random,bts}, campaign=all)",
+        "rows_unit_layer": 20000,
+        "pairs_pre_filter": 160,
+        "pairs_post_filter": 159,
+        "min_exposures": 5,
+        "split_key": "(item_id, behavior_policy) pair",
+        "target": "mean(reward) per (item, behavior_policy)",
+        "features": [
+          "n_exposures",
+          "mean_position",
+          "mean_pscore",
+          "policy_random"
+        ],
+        "per_seed_diagnostics": [
+          {
+            "seed": 42,
+            "train_n": 111,
+            "val_n": 24,
+            "test_n": 24,
+            "test_target_mean": 0.004709722367323368,
+            "test_target_std": 0.009135623777890838
+          },
+          {
+            "seed": 137,
+            "train_n": 111,
+            "val_n": 24,
+            "test_n": 24,
+            "test_target_mean": 0.0027044233798758813,
+            "test_target_std": 0.005150662936220713
+          },
+          {
+            "seed": 256,
+            "train_n": 111,
+            "val_n": 24,
+            "test_n": 24,
+            "test_target_mean": 0.0026972329222607703,
+            "test_target_std": 0.0046334812190611105
+          }
+        ]
+      },
+      "group_mean": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.009177183444013266,
+          0.00553118554406432,
+          0.005009344336477121
+        ],
+        "mean": 0.006572571108184902,
+        "std": 0.00227070113102671
+      },
+      "linear": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.009254630605564959,
+          0.005642498244246275,
+          0.005458226696437133
+        ],
+        "mean": 0.006785118515416123,
+        "std": 0.0021406439389530553
+      },
+      "lightgbm": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.011848494660819067,
+          0.007127313223404648,
+          0.006372647336078412
+        ],
+        "mean": 0.008449485073434043,
+        "std": 0.002967714572145536
+      },
+      "mlp": {
+        "metric_name": "RMSE",
+        "values_per_seed": [
+          0.009506367101418372,
+          0.005941413530036485,
+          0.005243154073677796
+        ],
+        "mean": 0.006896978235044218,
+        "std": 0.0022866075874680876
+      }
+    }
+  }
+}
