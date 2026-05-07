@@ -1,0 +1,305 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "samplingRate": "cr:samplingRate",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform",
+    "prov": "http://www.w3.org/ns/prov#",
+    "equivalentProperty": "cr:equivalentProperty"
+  },
+  "@type": "sc:Dataset",
+  "name": "OranBench C2 X5 RetailHero Uplift",
+  "conformsTo": "http://mlcommons.org/croissant/1.1",
+  "description": "Croissant metadata for the C2 uplift-ranking card. The processed file contains client-level treatment, outcome, RFM, and demographic features derived from public X5 RetailHero uplift data.",
+  "url": "https://www.uplift-modeling.com/en/latest/api/datasets/fetch_x5.html",
+  "license": "https://www.uplift-modeling.com/en/latest/",
+  "version": "0.1.0",
+  "citeAs": "X5 RetailHero uplift dataset as distributed through scikit-uplift.",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "x5-uplift.parquet",
+      "name": "x5-uplift.parquet",
+      "contentUrl": "data/x5/processed/uplift.parquet",
+      "encodingFormat": "application/vnd.apache.parquet",
+      "sha256": "be2716dee734ff1623b3805748ee2d337356938afb24cbbe0a371d97723a4c6a"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "name": "x5_uplift",
+      "description": "Client-level treatment-response rows used by C2.",
+      "key": [
+        "client_id"
+      ],
+      "field": [
+        {
+          "@id": "x5_uplift/client_id",
+          "@type": "cr:Field",
+          "name": "client_id",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "client_id"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/treatment",
+          "@type": "cr:Field",
+          "name": "treatment",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "treatment"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/outcome",
+          "@type": "cr:Field",
+          "name": "outcome",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "outcome"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_first_issue_date",
+          "@type": "cr:Field",
+          "name": "X_first_issue_date",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_first_issue_date"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_first_redeem_date",
+          "@type": "cr:Field",
+          "name": "X_first_redeem_date",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_first_redeem_date"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_age",
+          "@type": "cr:Field",
+          "name": "X_age",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_age"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_gender",
+          "@type": "cr:Field",
+          "name": "X_gender",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_gender"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_purchase_count",
+          "@type": "cr:Field",
+          "name": "X_purchase_count",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_purchase_count"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_total_spend",
+          "@type": "cr:Field",
+          "name": "X_total_spend",
+          "dataType": "sc:Float",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_total_spend"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_unique_products",
+          "@type": "cr:Field",
+          "name": "X_unique_products",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_unique_products"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_unique_stores",
+          "@type": "cr:Field",
+          "name": "X_unique_stores",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_unique_stores"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_first_purchase_ts",
+          "@type": "cr:Field",
+          "name": "X_first_purchase_ts",
+          "dataType": "sc:DateTime",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_first_purchase_ts"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_last_purchase_ts",
+          "@type": "cr:Field",
+          "name": "X_last_purchase_ts",
+          "dataType": "sc:DateTime",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_last_purchase_ts"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_avg_spend",
+          "@type": "cr:Field",
+          "name": "X_avg_spend",
+          "dataType": "sc:Float",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_avg_spend"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/X_recency_days",
+          "@type": "cr:Field",
+          "name": "X_recency_days",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "X_recency_days"
+            }
+          }
+        },
+        {
+          "@id": "x5_uplift/propensity_estimate",
+          "@type": "cr:Field",
+          "name": "propensity_estimate",
+          "dataType": "sc:Float",
+          "source": {
+            "fileObject": {
+              "@id": "x5-uplift.parquet"
+            },
+            "extract": {
+              "column": "propensity_estimate"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "datePublished": "2026-05-02"
+}

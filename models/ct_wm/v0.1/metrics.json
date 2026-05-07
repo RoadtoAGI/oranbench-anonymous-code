@@ -1,0 +1,72 @@
+{
+  "schema_version": "e7-v0.2",
+  "data": "data/kuairand/processed/clicks.parquet",
+  "split": {
+    "rule": "temporal_tail",
+    "val_frac": 0.1
+  },
+  "seeds": {
+    "137": {
+      "checkpoint": "models/ct_wm/v0.1/seed_137/checkpoint.pt",
+      "checkpoint_sha256": "ddac360ea46ea3ba540056a4acbffa5332b011d9d896ccae7d5e22411e466917",
+      "best_epoch": 1,
+      "best_val_loss": 1.5424582393021093,
+      "n_val": 118606,
+      "click_auc": 0.6217228981857861,
+      "like_auc": 0.49754767570329744,
+      "long_view_auc": 0.6355422758058397,
+      "watch_time_mae": 0.8679630160331726,
+      "watch_time_rmse": 1.239567711141328,
+      "watch_time_spearman": 0.1734438505983283,
+      "wall_seconds": 108.05671191215515,
+      "device": "cuda",
+      "hardware_tag": "autodl RTX 4090D 24GB"
+    },
+    "256": {
+      "checkpoint": "models/ct_wm/v0.1/seed_256/checkpoint.pt",
+      "checkpoint_sha256": "0b84154cdeecb38743fae9c7ceadb623b46f1865c7a12da776d82d830039cd85",
+      "best_epoch": 1,
+      "best_val_loss": 1.5413302953992287,
+      "n_val": 118606,
+      "click_auc": 0.6222380369776339,
+      "like_auc": 0.5190203424477001,
+      "long_view_auc": 0.6392311948564033,
+      "watch_time_mae": 0.8718717098236084,
+      "watch_time_rmse": 1.2395828578317623,
+      "watch_time_spearman": 0.1708448472856665,
+      "wall_seconds": 110.51489090919495,
+      "device": "cuda",
+      "hardware_tag": "autodl RTX 4090D 24GB"
+    },
+    "42": {
+      "checkpoint": "models/ct_wm/v0.1/seed_42/checkpoint.pt",
+      "checkpoint_sha256": "d451d4793d6704c8bec54bb212d45716a5cb7590edaaf26074319292973fc0eb",
+      "best_epoch": 1,
+      "best_val_loss": 1.53970316132894,
+      "n_val": 118606,
+      "click_auc": 0.6234370245096675,
+      "like_auc": 0.5137703801087643,
+      "long_view_auc": 0.6398174315567702,
+      "watch_time_mae": 0.8660936951637268,
+      "watch_time_rmse": 1.2381400620508611,
+      "watch_time_spearman": 0.17920689808913384,
+      "wall_seconds": 108.56688117980957,
+      "device": "cuda",
+      "hardware_tag": "autodl RTX 4090D 24GB"
+    }
+  },
+  "aggregate": {
+    "click_auc_mean": 0.6224659865576959,
+    "click_auc_std": 0.0008795044183195723,
+    "like_auc_mean": 0.5101127994199206,
+    "like_auc_std": 0.011193849947654107,
+    "long_view_auc_mean": 0.6381969674063378,
+    "long_view_auc_std": 0.002317640823667567,
+    "watch_time_mae_mean": 0.8686428070068359,
+    "watch_time_mae_std": 0.002948380941865764,
+    "watch_time_rmse_mean": 1.2390968770079838,
+    "watch_time_rmse_std": 0.0008286606676969565,
+    "watch_time_spearman_mean": 0.1744985319910429,
+    "watch_time_spearman_std": 0.004279630596213411
+  }
+}

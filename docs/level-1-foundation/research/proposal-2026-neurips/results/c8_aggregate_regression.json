@@ -18,7 +18,7 @@
   "cards": {
     "KuaiRand": {
       "info": {
-        "source": "data/kuairand/processed/clicks.parquet",
+        "source": "/root/projects/oran-suite/oranai/oransim-dev/data/kuairand/processed/clicks.parquet",
         "rows_unit_layer": 1186059,
         "items_pre_filter": 7583,
         "items_post_filter": 7334,
@@ -99,7 +99,7 @@
     },
     "X5": {
       "info": {
-        "source": "data/x5/processed/uplift.parquet",
+        "source": "/root/projects/oran-suite/oranai/oransim-dev/data/x5/processed/uplift.parquet",
         "rows_unit_layer": 200039,
         "split_key": "client_id row split; aggregate by treatment plus rank-quantile customer cells within each split",
         "target": "mean(outcome) per (subsplit, treatment, customer-cell) group",

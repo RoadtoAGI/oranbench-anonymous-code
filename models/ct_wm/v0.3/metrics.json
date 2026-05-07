@@ -1,0 +1,54 @@
+{
+  "schema_version": "e7-v0.2",
+  "data": "data/kuairand/processed/clicks.parquet",
+  "split": {
+    "rule": "temporal_tail",
+    "val_frac": 0.1
+  },
+  "seeds": {
+    "137": {
+      "checkpoint": "models/ct_wm/v0.3/seed_137/checkpoint.pt",
+      "checkpoint_sha256": "eee4de0eb7fc1acee8db69055a77b3a0452cbeb1d3421c9abc7e34fc55fdf0af",
+      "best_epoch": 3,
+      "best_val_loss": 1.9449133614799219,
+      "n_val": 118606,
+      "click_auc": 0.6424774731878109,
+      "like_auc": 0.548940000401807,
+      "long_view_auc": 0.6754136626631704,
+      "watch_time_mae": 0.8595361113548279,
+      "watch_time_rmse": 1.2332024135351922,
+      "watch_time_spearman": 0.1896808944545008,
+      "hardware_tag": "autodl RTX 4090D 24GB \u00b7 v0.3 mixed RankNet+Huber rank_alpha=0.7"
+    },
+    "42": {
+      "checkpoint": "models/ct_wm/v0.3/seed_42/checkpoint.pt",
+      "checkpoint_sha256": "9b01eb246684d21c3368bbbcf5c677ffee54e074b50984bc532da6eb59d59872",
+      "best_epoch": 4,
+      "best_val_loss": 1.940544860149084,
+      "n_val": 118606,
+      "click_auc": 0.644444631906123,
+      "like_auc": 0.5620787959565934,
+      "long_view_auc": 0.6767389982455214,
+      "watch_time_mae": 0.8299493193626404,
+      "watch_time_rmse": 1.2337600528264965,
+      "watch_time_spearman": 0.1925406081291131,
+      "wall_seconds": 2350.4388077259064,
+      "device": "cuda",
+      "hardware_tag": "autodl RTX 4090D 24GB \u00b7 v0.3 mixed RankNet+Huber rank_alpha=0.7"
+    }
+  },
+  "aggregate": {
+    "click_auc_mean": 0.643461052546967,
+    "click_auc_std": 0.001390991269388724,
+    "like_auc_mean": 0.5555093981792002,
+    "like_auc_std": 0.009290531433413105,
+    "long_view_auc_mean": 0.6760763304543459,
+    "long_view_auc_std": 0.0009371537776282419,
+    "watch_time_mae_mean": 0.8447427153587341,
+    "watch_time_mae_std": 0.020921021251231624,
+    "watch_time_rmse_mean": 1.2334812331808442,
+    "watch_time_rmse_std": 0.00039431052433730083,
+    "watch_time_spearman_mean": 0.19111075129180694,
+    "watch_time_spearman_std": 0.0020221229315702744
+  }
+}

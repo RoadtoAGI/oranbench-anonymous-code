@@ -1,0 +1,110 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "samplingRate": "cr:samplingRate",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform",
+    "prov": "http://www.w3.org/ns/prov#",
+    "equivalentProperty": "cr:equivalentProperty"
+  },
+  "@type": "sc:Dataset",
+  "name": "OranBench C4 Dryad Weibo Cascade Candidate",
+  "conformsTo": "http://mlcommons.org/croissant/1.1",
+  "description": "Croissant metadata draft for the C4 diffusion-calibration card. The Dryad dataset is a public Weibo cascade candidate; event-time schema suitability remains pending before empirical reporting.",
+  "url": "https://doi.org/10.5061/dryad.44j0zpccv",
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "version": "0.1.0",
+  "citeAs": "Cao, Ren-Meng; Liu, Xiao-Fan; Xu, Xiao-Ke (2021). Why cannot long-term cascade be predicted? Exploring temporal dynamics in information diffusion processes [Dataset]. Dryad. https://doi.org/10.5061/dryad.44j0zpccv",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "dryad-44j0zpccv-landing.html",
+      "name": "dryad-44j0zpccv-landing.html",
+      "contentUrl": "https://doi.org/10.5061/dryad.44j0zpccv",
+      "encodingFormat": "text/html",
+      "sha256": "79947bdad8738ad0ac2594b55c5718b4fdc491b8d5bb3647709d30761e3221e9"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "name": "weibo_cascade_schema_candidate",
+      "description": "Candidate event-time cascade schema. Fields are placeholders until source schema inspection is complete.",
+      "key": [
+        "cascade_id",
+        "event_time"
+      ],
+      "field": [
+        {
+          "@id": "weibo_cascade_schema/cascade_id",
+          "@type": "cr:Field",
+          "name": "cascade_id",
+          "dataType": "sc:Text",
+          "value": "pending_schema_inspection"
+        },
+        {
+          "@id": "weibo_cascade_schema/event_time",
+          "@type": "cr:Field",
+          "name": "event_time",
+          "dataType": "sc:DateTime",
+          "value": "pending_schema_inspection"
+        },
+        {
+          "@id": "weibo_cascade_schema/parent_id",
+          "@type": "cr:Field",
+          "name": "parent_id",
+          "dataType": "sc:Text",
+          "value": "pending_schema_inspection"
+        },
+        {
+          "@id": "weibo_cascade_schema/user_id",
+          "@type": "cr:Field",
+          "name": "user_id",
+          "dataType": "sc:Text",
+          "value": "pending_schema_inspection"
+        }
+      ]
+    }
+  ],
+  "datePublished": "2026-05-02"
+}

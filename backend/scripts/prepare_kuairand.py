@@ -12,6 +12,8 @@ import sys
 from pathlib import Path
 
 import pandas as pd
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from causaltwin.paths import KUAIRAND_PROCESSED, KUAIRAND_RAW
@@ -103,6 +105,42 @@ def normalize_chunk(
     return out
 
 
+def find_meta_csv(raw_dir: Path, prefix: str) -> Path | None:
+    """Recursively locate the first CSV whose basename starts with ``prefix``."""
+    for path in raw_dir.rglob(f"{prefix}*.csv"):
+        return path
+    return None
+
+
+def build_user_features(raw_dir: Path, out_path: Path) -> dict | None:
+    csv = find_meta_csv(raw_dir, "user_features")
+    if not csv:
+        return None
+    df = pd.read_csv(csv)
+    df["user_id"] = df["user_id"].astype(str)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    df.to_parquet(out_path, index=False)
+    info = {"source": str(csv), "rows": int(len(df)), "cols": int(len(df.columns)), "output": str(out_path)}
+    print(f"[kuairand-prepare] user_features: {info['rows']} rows × {info['cols']} cols → {out_path}")
+    return info
+
+
+def build_video_features(raw_dir: Path, out_path: Path) -> dict | None:
+    """Basic video features only (basic_*.csv). Statistic CSV is intentionally
+    skipped — its columns (``play_duration``, ``complete_play_cnt``, etc.) are
+    cumulative target leakage for the watch-time prediction task."""
+    csv = find_meta_csv(raw_dir, "video_features_basic")
+    if not csv:
+        return None
+    df = pd.read_csv(csv)
+    df["video_id"] = df["video_id"].astype(str)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    df.to_parquet(out_path, index=False)
+    info = {"source": str(csv), "rows": int(len(df)), "cols": int(len(df.columns)), "output": str(out_path)}
+    print(f"[kuairand-prepare] video_features_basic: {info['rows']} rows × {info['cols']} cols → {out_path}")
+    return info
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--raw-dir", type=Path, default=KUAIRAND_RAW)
@@ -110,6 +148,9 @@ def main() -> int:
     parser.add_argument("--chunksize", type=int, default=200_000)
     parser.add_argument("--max-rows", type=int, default=0, help="Optional smoke-test row cap.")
     parser.add_argument("--include-standard", action="store_true", help="Include non-random standard logs. Default is C1 random-exposure slice only.")
+    parser.add_argument("--include-meta", action="store_true",
+                        help="Also export user_features.parquet + video_features.parquet "
+                             "(basic only; statistic skipped to avoid watch-time leakage). v0.4+.")
     parser.add_argument(
         "--uniform-propensity",
         type=float,
@@ -130,33 +171,47 @@ def main() -> int:
         return 0
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    frames = []
     total = 0
     propensity_present = False
     default_propensity = args.uniform_propensity if args.uniform_propensity > 0 else None
-    for path, mapping in cands:
-        usecols = sorted({v for v in mapping.values() if v})
-        for chunk in pd.read_csv(path, usecols=usecols, chunksize=args.chunksize):
-            norm = normalize_chunk(chunk, mapping, path, default_propensity=default_propensity)
-            propensity_present = propensity_present or norm["propensity"].notna().any()
-            if args.max_rows and total + len(norm) > args.max_rows:
-                norm = norm.iloc[: max(args.max_rows - total, 0)]
-            if not norm.empty:
-                frames.append(norm)
+    user_set: set[str] = set()
+    item_set: set[str] = set()
+    writer: pq.ParquetWriter | None = None
+    schema: pa.Schema | None = None
+    try:
+        for path, mapping in cands:
+            usecols = sorted({v for v in mapping.values() if v})
+            for chunk in pd.read_csv(path, usecols=usecols, chunksize=args.chunksize):
+                norm = normalize_chunk(chunk, mapping, path, default_propensity=default_propensity)
+                propensity_present = propensity_present or norm["propensity"].notna().any()
+                if args.max_rows and total + len(norm) > args.max_rows:
+                    norm = norm.iloc[: max(args.max_rows - total, 0)]
+                if norm.empty:
+                    continue
+                user_set.update(norm["user_id"].unique().tolist())
+                item_set.update(norm["item_id"].unique().tolist())
+                table = pa.Table.from_pandas(norm, preserve_index=False)
+                if writer is None:
+                    schema = table.schema
+                    writer = pq.ParquetWriter(args.out, schema, compression="snappy")
+                else:
+                    table = table.select(schema.names).cast(schema, safe=False)
+                writer.write_table(table)
                 total += len(norm)
+                if args.max_rows and total >= args.max_rows:
+                    break
             if args.max_rows and total >= args.max_rows:
                 break
-        if args.max_rows and total >= args.max_rows:
-            break
+    finally:
+        if writer is not None:
+            writer.close()
 
-    if not frames:
+    if total == 0:
         raise SystemExit("No rows produced from candidate KuaiRand CSVs")
-    df = pd.concat(frames, ignore_index=True)
-    df.to_parquet(args.out, index=False)
     manifest = {
-        "rows": int(len(df)),
-        "n_users": int(df["user_id"].nunique()),
-        "n_items": int(df["item_id"].nunique()),
+        "rows": int(total),
+        "n_users": len(user_set),
+        "n_items": len(item_set),
         "propensity_status": "present" if propensity_present else "missing_or_unmapped",
         "propensity_source": (
             f"uniform_random_pool_1/{KUAIRAND_PURE_RANDOM_POOL_SIZE}"
@@ -167,7 +222,13 @@ def main() -> int:
         "output": str(args.out),
         "sources": [str(p) for p, _ in cands],
         "include_standard": bool(args.include_standard),
+        "include_meta": bool(args.include_meta),
     }
+    if args.include_meta:
+        user_info = build_user_features(args.raw_dir, args.out.parent / "user_features.parquet")
+        video_info = build_video_features(args.raw_dir, args.out.parent / "video_features.parquet")
+        manifest["user_features"] = user_info
+        manifest["video_features"] = video_info
     (args.out.parent / "kuairand_prepare_manifest.json").write_text(
         json.dumps(manifest, indent=2), encoding="utf-8"
     )

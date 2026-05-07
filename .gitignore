@@ -13,3 +13,13 @@ data/x5/processed/*
 !data/kuairand/processed/.gitkeep
 !data/x5/raw/.gitkeep
 !data/x5/processed/.gitkeep
+
+# Model artifacts (heavy checkpoints / logs are intentionally not committed).
+models/**/*.pt
+models/**/*.pkl
+models/**/*.log
+models/ct_wm/**/seed_*/
+
+# Keep README + metrics.json
+!models/**/README.md
+!models/**/metrics.json

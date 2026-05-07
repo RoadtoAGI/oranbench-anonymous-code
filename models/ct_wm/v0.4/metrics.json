@@ -1,0 +1,56 @@
+{
+  "schema_version": "e7-v0.2",
+  "data": "data/kuairand/processed/clicks.parquet",
+  "split": {
+    "rule": "temporal_tail",
+    "val_frac": 0.1
+  },
+  "seeds": {
+    "137": {
+      "checkpoint": "models/ct_wm/v0.4/seed_137/checkpoint.pt",
+      "checkpoint_sha256": "7b275b4764f7bbd34747b748685d3a246a5fc89deedd4690fe218f1c14613e1b",
+      "best_epoch": 6,
+      "best_val_loss": 1.6230103224206263,
+      "n_val": 262267,
+      "click_auc": 0.6718009424032327,
+      "like_auc": 0.7650299212584113,
+      "long_view_auc": 0.7112356598435455,
+      "watch_time_mae": 0.9899533987045288,
+      "watch_time_rmse": 1.5188846732503314,
+      "watch_time_spearman": 0.2575878232453696,
+      "wall_seconds": 6337.113959312439,
+      "device": "cuda",
+      "hardware_tag": "autodl RTX 4090"
+    },
+    "42": {
+      "checkpoint": "models/ct_wm/v0.4/seed_42/checkpoint.pt",
+      "checkpoint_sha256": "ba8ab1def568422358b08a7e5ba7d6071964cb81da61ed9dfef5392f79d97e40",
+      "best_epoch": 5,
+      "best_val_loss": 1.617818424811297,
+      "n_val": 262267,
+      "click_auc": 0.6702467781106541,
+      "like_auc": 0.755892389067465,
+      "long_view_auc": 0.7097515889159629,
+      "watch_time_mae": 0.9815678000450134,
+      "watch_time_rmse": 1.5170057633805354,
+      "watch_time_spearman": 0.2517184978354397,
+      "wall_seconds": 5715.247586250305,
+      "device": "cuda",
+      "hardware_tag": "autodl RTX 4090"
+    }
+  },
+  "aggregate": {
+    "click_auc_mean": 0.6710238602569434,
+    "click_auc_std": 0.0010989601103603194,
+    "like_auc_mean": 0.7604611551629381,
+    "like_auc_std": 0.006461210975528473,
+    "long_view_auc_mean": 0.7104936243797542,
+    "long_view_auc_std": 0.0010493966166554845,
+    "watch_time_mae_mean": 0.9857605993747711,
+    "watch_time_mae_std": 0.005929513676452149,
+    "watch_time_rmse_mean": 1.5179452183154334,
+    "watch_time_rmse_std": 0.0013285899101710826,
+    "watch_time_spearman_mean": 0.25465316054040465,
+    "watch_time_spearman_std": 0.004150239798351948
+  }
+}
