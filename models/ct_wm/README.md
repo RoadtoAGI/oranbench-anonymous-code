@@ -48,7 +48,27 @@ heads upgrades inherited from v0.2 (`--d-model 512 --layers 6 --heads 8
 
 v0.4 trains on the full Pure slice (random + standard, ~2.6 M rows) and adds
 side towers over user metadata (25 dims) and basic video metadata (4 dims).
-Add `--user-features data/kuairand/processed/user_features.parquet` and
-`--video-features data/kuairand/processed/video_features.parquet` to the v0.3
-command (the meta-tower features are produced by `prepare_kuairand.py`).
+
+Re-run `prepare_kuairand.py` with the meta-tower flags so the side-tower
+parquet files are emitted next to `clicks.parquet`:
+
+```bash
+python3 backend/scripts/prepare_kuairand.py \
+    --include-standard --include-meta
+```
+
+Then add `--user-features` / `--video-features` to the v0.3 training command:
+
+```bash
+python3 backend/scripts/train_ct_wm.py \
+    --data           data/kuairand/processed/clicks.parquet \
+    --user-features  data/kuairand/processed/user_features.parquet \
+    --video-features data/kuairand/processed/video_features.parquet \
+    --watch-time-loss mixed --rank-alpha 0.7 \
+    --d-model 512 --layers 6 --heads 8 --epochs 20 \
+    --pos-weight-balance --pos-weight-mode sqrt \
+    --out  models/ct_wm/v0.4/seed_${seed} \
+    --seed ${seed}
+```
+
 Per-seed wall time on a single RTX 4090: ~1.6 h (see `v0.4/metrics.json`).
