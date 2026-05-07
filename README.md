@@ -70,10 +70,8 @@ python3 backend/scripts/run_oranbench_aggregate.py \
   --seeds 42,137,256
 ```
 
-Submitted fixed-seed outputs (seeds 42, 137, 256) are committed under
-`docs/level-1-foundation/research/proposal-2026-neurips/results/` for
-inspection, with per-seed runs under `results/seed_runs/` and aggregate
-summaries in `results/main_table_seed_summary.json`.
+Outputs are written to the path supplied via the script's `--out` argument
+(default paths are listed in each script's `--help`).
 
 ## Train the Action-Conditioned Outcome Surrogate
 
@@ -97,18 +95,6 @@ sha256-tagged checkpoint references, per-seed validation scores, and
 cross-seed mean ± std are released. See [`models/ct_wm/README.md`](models/ct_wm/README.md)
 for the v0.1 → v0.4 trajectory.
 
-## Dataset Metadata
-
-Croissant JSON-LD drafts are under
-`docs/level-1-foundation/research/proposal-2026-neurips/croissant/` and
-per-dataset mapping notes are under `dataset-mapping/`. Validate metadata:
-
-```bash
-for f in docs/level-1-foundation/research/proposal-2026-neurips/croissant/*.jsonld; do
-  mlcroissant validate --jsonld="$f"
-done
-```
-
 ## Repository Layout
 
 ```
@@ -129,12 +115,6 @@ done
 ├── data/
 │   ├── kuairand/{raw,processed}/   # populated by pull_kuairand.py + prepare_kuairand.py
 │   └── x5/{raw,processed}/         # populated by pull_x5.py + prepare_x5.py
-├── docs/
-│   └── level-1-foundation/research/proposal-2026-neurips/
-│       ├── croissant/              # Croissant JSON-LD per card
-│       ├── dataset-mapping/        # per-dataset preprocessing notes
-│       ├── references.bib
-│       └── results/                # submitted fixed-seed outputs
 ├── models/
 │   └── ct_wm/
 │       ├── README.md               # v0.1 → v0.4 trajectory
