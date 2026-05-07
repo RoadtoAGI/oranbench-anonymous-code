@@ -75,25 +75,34 @@ Outputs are written to the path supplied via the script's `--out` argument
 
 ## Train the Action-Conditioned Outcome Surrogate
 
-After `prepare_kuairand.py` produces `data/kuairand/processed/clicks.parquet`:
+After `prepare_kuairand.py` produces `data/kuairand/processed/clicks.parquet`,
+train all three seeds and write the cross-seed `metrics.json` (replicate the
+v0.1 pilot configuration shown below; full hyperparameter list is in
+`train_ct_wm.py --help`):
 
 ```bash
-# train one seed
-python3 backend/scripts/train_ct_wm.py \
-    --seed 42 \
-    --out-dir models/ct_wm/v0.4/seed_42
+# train all three seeds (v0.1 pilot config: d_model=128, layers=2, heads=4,
+# epochs=2 ; later versions adjust these — see models/ct_wm/README.md)
+for seed in 42 137 256; do
+  python3 backend/scripts/train_ct_wm.py \
+    --data data/kuairand/processed/clicks.parquet \
+    --out  models/ct_wm/v0.1/seed_${seed} \
+    --max-history 50 --d-model 128 --layers 2 --heads 4 \
+    --epochs 2 --batch-size 512 --seed ${seed}
+done
 
-# evaluate trained checkpoints with the e7-v0.2 schema
+# evaluate every seed_*/ subdirectory under --runs-dir and emit the
+# cross-seed metrics.json (e7-v0.2 schema)
 python3 backend/scripts/eval_ct_wm.py \
-    --checkpoints models/ct_wm/v0.4/seed_42/checkpoint.pt \
-                  models/ct_wm/v0.4/seed_137/checkpoint.pt \
-    --out models/ct_wm/v0.4/metrics.json
+    --runs-dir models/ct_wm/v0.1 \
+    --data     data/kuairand/processed/clicks.parquet \
+    --out      models/ct_wm/v0.1/metrics.json
 ```
 
 Heavy `*.pt` checkpoints are not committed; only `metrics.json` files with
 sha256-tagged checkpoint references, per-seed validation scores, and
 cross-seed mean ± std are released. See [`models/ct_wm/README.md`](models/ct_wm/README.md)
-for the v0.1 → v0.4 trajectory.
+for the v0.1 → v0.4 trajectory and per-version configuration deltas.
 
 ## Repository Layout
 
@@ -121,7 +130,6 @@ for the v0.1 → v0.4 trajectory.
 │       ├── v0.1/metrics.json
 │       ├── v0.3/metrics.json
 │       └── v0.4/metrics.json
-├── requirements.txt
 ├── requirements-oranbench.txt
 └── requirements-obp-no-deps.txt
 ```

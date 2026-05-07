@@ -43,17 +43,18 @@ autodl quickstart (no GPU on the dev workstation; train remotely)
     pip install --upgrade pip
     pip install torch transformers pandas pyarrow scikit-learn scipy
 
-3. Sync code + data from the dev workstation::
+3. Sync code + data to the remote workstation (replace ``<repo>`` with the
+   directory you cloned this artifact into on the remote host)::
 
     scp backend/scripts/train_ct_wm.py backend/scripts/eval_ct_wm.py \\
         backend/causaltwin/paths.py \\
-        <user>@<autodl_host>:~/oransim-dev/backend/scripts/
+        <user>@<remote_host>:~/<repo>/backend/scripts/
     scp data/kuairand/processed/clicks.parquet \\
-        <user>@<autodl_host>:~/oransim-dev/data/kuairand/processed/
+        <user>@<remote_host>:~/<repo>/data/kuairand/processed/
 
 4. Train all three seeds::
 
-    cd ~/oransim-dev
+    cd ~/<repo>
     for seed in 42 137 256; do
       python3 backend/scripts/train_ct_wm.py \\
         --data data/kuairand/processed/clicks.parquet \\
